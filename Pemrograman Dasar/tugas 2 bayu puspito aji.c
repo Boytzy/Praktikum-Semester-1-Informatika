@@ -1,0 +1,79 @@
+#include <stdio.h>
+
+int main(){
+    int pilih;
+    char pilih2;
+
+    kembali : 
+    printf("Pilih ordo matrix, 2x2 maka 2 atau 3x3 maka 3 : ");
+    scanf("%i", &pilih);
+
+    ordo(pilih, pilih);
+
+    kembali2 :
+    printf("\nApakah ingin mengulang program? [y/n] : ");
+    scanf("%s", &pilih2);
+
+    switch (pilih2)
+    {
+    case 'y':
+        goto kembali;
+        break;
+    
+    case 'n':
+        printf("Program Selesai ;D");
+        break;
+
+    default:
+        printf("Pilihan yang ada input tidak ada, coba pilih lagi");
+        goto kembali2;
+        break;
+    }
+}
+
+int ordo(baris, kolom){
+    int i, j, ordo[baris][kolom];
+
+    for ( i = 0; i < baris; i++)
+    {
+        for ( j = 0; j < kolom; j++)
+        {
+            printf("Masukan angka dalam index [%i][%i] : ", i, j);
+            scanf("%i", &ordo[i][j]);
+        }
+    }
+
+    //OutPut
+    for (i = 0; i < baris; i++)
+    {
+        for ( j = 0; j < kolom; j++)
+        {
+            printf("%i\t", ordo[i][j]);
+            
+        }
+        printf("\n");
+    }
+    
+
+    int max = 0, min = ordo[0][0];
+
+    for (i = 0; i < baris; i++)
+    {
+        for ( j = 0; j < kolom; j++)
+        {
+            if(min > ordo[i][j])
+            {
+                min = ordo[i][j];
+            }
+
+            if (max < ordo[i][j])
+            {
+                max = ordo[i][j];
+            }
+            
+        }
+    }
+    printf("Smallest : %i\tBiggest : %i", min, max);
+    
+    
+}

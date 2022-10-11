@@ -1,0 +1,227 @@
+#include<stdio.h>
+#include<string.h>//oprasi string
+#include<stdlib.h>//buat ngontrol terminal
+int menu, x, ada_simbol;
+void createdata(),showdata(),deletedata(),updatedata(),searchdata(),exitdata(),bersihkanterminal(),mulailagi(),simbol();//fungsi
+char input_nim[50],nim[50],nama[50],dosen[50],kelas[50],cari[50];//depan max 50 data blkng setiap data bisa menyimpan 50 kum_karakter
+
+FILE *r, *w, *a;
+
+int main(){
+	bersihkanterminal();//fungsi untuk membershkan trminal
+	printf("sistem perdataan pada akun I-Lab Infotech ");
+	printf("\n\n=== Pilihan data === ");
+	printf("\n\n1. create data. ");
+	printf("\n2. Show data. ");
+	printf("\n3. Update data.");
+	printf("\n4. Delete data. ");
+	printf("\n5. Search data. ");
+	printf("\n6. Exit. ");
+	printf("\nMasukan Pilihan : ");
+	scanf("%d",&menu);//meleh
+	if (menu==1){
+		createdata();
+	}
+	else if(menu==2){
+		showdata();
+	}
+	else if(menu==3){
+		updatedata();
+	}
+	else if(menu==4){
+		deletedata();
+	}
+	else if(menu==5){
+		searchdata();
+	}
+	else if(menu==6){
+		exitdata();
+	}
+	else{
+		main();
+	}
+	return 0;
+}
+
+void createdata(){
+	bersihkanterminal();
+	x=0;//index
+	r = fopen("data.txt", "r");
+	a = fopen("data.txt", "a");
+	
+	printf("=== create data ==== ");
+	printf("\ninput nim praktikan\t\t: ");
+	scanf(" %s",input_nim);
+	while(fscanf(r, "%[^-]-%[^-]-%[^\n]\n", nim, nama, kelas) != EOF){
+		if(strcmp(nim, input_nim) == 0){
+			x = 1;
+		}
+	}
+	simbol(input_nim);
+	if(x==0){
+		if(ada_simbol==0){
+			strcpy(nim, input_nim);
+			printf("input nama praktikan\t\t: ");
+			scanf(" %[^\n]s",nama);
+			printf("input kelas pemrograman dasar\t: ");
+			scanf(" %[^\n]s",kelas);
+			fprintf(a,"%s-%s-%s\n", nim, nama, strupr(kelas));
+			printf("\ndata berhasil ditambah.");
+		} else {
+			printf("nim ada simbol");
+		}
+	} else {
+		printf("nim duplikat");
+	}
+	fclose(r); fclose(a);
+	mulailagi();
+}
+
+void showdata(){
+	bersihkanterminal();
+	x=0;
+	int jmlh_data = 0;
+	r = fopen("data.txt", "r");
+
+	printf("\n\n=== list data ====\n\n");
+	while(fscanf(r, "%[^-]-%[^-]-%[^\n]\n", nim, nama, kelas) != EOF){
+		jmlh_data++;
+		printf("\n== %d ==\n",jmlh_data);
+		printf("nim praktikan\t\t: %s\n",nim);
+		printf("nama praktikan\t\t: %s\n",nama);
+		printf("kelas pemrograman dasar\t: %s\n",kelas);
+	}
+	fclose(r);
+	mulailagi();
+}
+
+void updatedata(){
+	bersihkanterminal();
+	
+	x=0;
+	r = fopen("data.txt", "r");
+	w = fopen("data_baru.txt", "w");
+
+	printf("=== update data ==== ");
+	printf("\n\nmasukan NIm praktikan yang ingin di edit data nya : ");
+	scanf("%s", input_nim);
+	while(fscanf(r, "%[^-]-%[^-]-%[^\n]\n", nim, nama, kelas) != EOF){
+		if(strcmp(nim, input_nim) == 0){
+			printf("\nnama baru\t\t: ");
+			scanf(" %[^\n]s",nama);
+			printf("kelas baru\t\t: ");
+			scanf(" %[^\n]s",kelas);
+			fprintf(w,"%s-%s-%s\n", nim, nama, strupr(kelas));
+			printf("\ndata berhasil di edit");
+		} else {
+			fprintf(w,"%s-%s-%s\n", nim, nama, strupr(kelas));
+		}
+	}
+
+	fclose(r); fclose(w);
+	remove("data.txt");
+	rename("data_baru.txt", "data.txt");
+	mulailagi();
+
+}
+
+void deletedata(){
+	bersihkanterminal();
+	x=0;
+	r = fopen("data.txt", "r");
+	w = fopen("data_baru.txt", "w");
+	
+	printf("=== delete data ==== ");
+	printf("\n\nmasukan NIm praktikan yang ingin di delete data nya : ");
+	scanf("%s", input_nim);
+	while(fscanf(r, "%[^-]-%[^-]-%[^\n]\n", nim, nama, kelas) != EOF){//nyari dta
+		if(strcmp(nim, input_nim) != 0){
+			fprintf(w,"%s-%s-%s\n", nim, nama, strupr(kelas));
+		} else if(strcmp(nim, input_nim) != 1){
+			x = 1;
+			printf("\ndata berhasil di hapus");
+		}
+	}
+	if(x==0){
+		printf("data tidak tersedia");
+	}
+
+	fclose(r); fclose(a);
+	remove("data.txt");
+	rename("data_baru.txt", "data.txt");
+	mulailagi();
+}
+
+void searchdata(){
+	bersihkanterminal();
+	
+	x=0;
+	r = fopen("data.txt", "r");
+
+	printf("=== search data ==== ");
+	printf("\n\nmasukan NIm praktikan : ");
+	scanf("%s", input_nim);
+	while(fscanf(r, "%[^-]-%[^-]-%[^\n]\n", nim, nama, kelas) != EOF){
+		if(strcmp(nim, input_nim) == 0){
+			x = 1;
+			printf("\nnim praktikan\t: %s\n",nim);
+			printf("nama praktikan\t: %s\n",nama);
+			printf("kelas prodar\t: %s\n",kelas);
+		}
+	}
+	if(x==0){
+		printf("data tidak ditemukan");
+	}
+	fclose(r);
+	mulailagi();
+}
+
+void exitdata(){
+	bersihkanterminal();
+	printf("terimahhh kasihhh :)");
+}
+
+void bersihkanterminal(){
+	system("cls");
+}
+void mulailagi(){
+	char b;
+	printf("\n\napakah anda ingin ulang lagi? ");
+	scanf("%s",&b);
+	if (b=='y'){
+		if (menu==1){
+			createdata();
+		}
+		else if(menu==2){
+			showdata();
+		}	
+		else if(menu==3){
+			updatedata();
+		}
+		else if(menu==4){
+			deletedata();
+		}
+		else if(menu==5){
+			searchdata();
+		}
+		else if(menu==6){
+			exitdata();
+		}
+	}
+	else if (b=='n'){
+		main();
+	}
+	else {
+		mulailagi();
+	}
+}
+
+void simbol(char *huruf){
+    char kum_karakter, huruf_cek[99]; ada_simbol = 0; strcpy(huruf_cek, huruf);
+    for(int i = 0, j = 0; kum_karakter = huruf_cek[i] = huruf_cek[j]; j++){
+        if((kum_karakter >= 32 && kum_karakter <= 47) ||  (kum_karakter >= 58 && kum_karakter <= 64) || (kum_karakter >= 91 && kum_karakter <= 96) || (kum_karakter >= 123 && kum_karakter <= 126)){
+            i++;
+            ada_simbol = 1;
+        }
+    }
+}

@@ -1,0 +1,63 @@
+#include <stdio.h>
+
+int main(){
+    int boruto[3] = {85, 90, 86};
+    int sarada[3] = {84, 90, 89};
+
+    printf("Nilai Boruto : \n");
+    printf("Ujian Progdas ke-1 : %d \n", boruto[0]);
+    printf("Ujian Progdas ke-2 : %d \n", boruto[1]);
+    printf("Ujian Progdas ke-3 : %d \n", boruto[2]);
+    printf("Nilai Sarada : \n");
+    printf("Ujian Progdas ke-1 : %d \n", sarada[0]);
+    printf("Ujian Progdas ke-2 : %d \n", sarada[1]);
+    printf("Ujian Progdas ke-3 : %d \n", sarada[2]);
+
+    //Rekap//
+    printf("Rekap : \n");
+
+    //Nilai 1
+    if (boruto[0] > sarada[0])
+    {
+        printf("Hasil : 1 \n");
+    }
+    else if(boruto[0] < sarada[0]){
+        printf("Hasil : 0 \n");
+    }
+    else if(boruto[0] == sarada[0]){
+        printf("Hasil : 0 \n");
+    }
+    else{
+        printf("Terdapat Nilai yang belum diinput \n");
+    }
+
+    //Nilai 2
+    if (boruto[1] > sarada[1])
+    {
+        printf("Hasil : 1 \n");
+    }
+    else if(boruto[1] < sarada[1]){
+        printf("Hasil : 0 \n");
+    }
+    else if(boruto[1] == sarada[1]){
+        printf("Hasil : 0 \n");
+    }
+    else{
+        printf("Terdapat Nilai yang belum diinput \n");
+    }
+    
+    //Nilai 3
+    if (boruto[2] > sarada[2])
+    {
+        printf("Hasil : 1 \n");
+    }
+    else if(boruto[2] < sarada[2]){
+        printf("Hasil : 0 \n");
+    }
+    else if(boruto[2] == sarada[2]){
+        printf("Hasil : 0 \n");
+    }
+    else{
+        printf("Terdapat Nilai yang belum diinput \n");
+    }
+}
